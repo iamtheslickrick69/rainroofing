@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 
 const colors = {
   50: "#eff6ff",
@@ -81,15 +84,30 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#262626] to-[#1a1a1a] text-white overflow-hidden relative w-full">
+    <div className="min-h-screen text-white overflow-hidden relative w-full">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src={`${CDN}/000modern.jpg`}
+          alt="Modern roofing project"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Dark overlay with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a]/95 via-[#1a1a1a]/85 to-[#1a1a1a]/90" />
+        {/* Blue tint overlay */}
+        <div className="absolute inset-0 bg-[#2563eb]/5" />
+      </div>
+
       {/* Grid SVG Background */}
-      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <svg className="absolute inset-0 w-full h-full z-[1]" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
             <path
               d="M 60 0 L 0 0 0 60"
               fill="none"
-              stroke="rgba(37,99,235,0.08)"
+              stroke="rgba(37,99,235,0.1)"
               strokeWidth="0.5"
             />
           </pattern>
@@ -109,27 +127,27 @@ export function HeroSection() {
       </svg>
 
       {/* Blue accent line at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2563eb]"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2563eb] z-20"></div>
 
       {/* Corner elements */}
-      <div className="corner-element top-8 left-8" style={{ animationDelay: "4s" }}>
+      <div className="corner-element top-8 left-8 z-10" style={{ animationDelay: "4s" }}>
         <div className="absolute top-0 left-0 w-2 h-2 opacity-30" style={{ background: colors[500] }}></div>
       </div>
-      <div className="corner-element top-8 right-8" style={{ animationDelay: "4.2s" }}>
+      <div className="corner-element top-8 right-8 z-10" style={{ animationDelay: "4.2s" }}>
         <div className="absolute top-0 right-0 w-2 h-2 opacity-30" style={{ background: colors[500] }}></div>
       </div>
-      <div className="corner-element bottom-8 left-8" style={{ animationDelay: "4.4s" }}>
+      <div className="corner-element bottom-8 left-8 z-10" style={{ animationDelay: "4.4s" }}>
         <div className="absolute bottom-0 left-0 w-2 h-2 opacity-30" style={{ background: colors[500] }}></div>
       </div>
-      <div className="corner-element bottom-8 right-8" style={{ animationDelay: "4.6s" }}>
+      <div className="corner-element bottom-8 right-8 z-10" style={{ animationDelay: "4.6s" }}>
         <div className="absolute bottom-0 right-0 w-2 h-2 opacity-30" style={{ background: colors[500] }}></div>
       </div>
 
       {/* Floating elements */}
-      <div className="floating-element" style={{ top: "25%", left: "15%", animationDelay: "5s" }}></div>
-      <div className="floating-element" style={{ top: "60%", left: "85%", animationDelay: "5.5s" }}></div>
-      <div className="floating-element" style={{ top: "40%", left: "10%", animationDelay: "6s" }}></div>
-      <div className="floating-element" style={{ top: "75%", left: "90%", animationDelay: "6.5s" }}></div>
+      <div className="floating-element z-10" style={{ top: "25%", left: "15%", animationDelay: "5s" }}></div>
+      <div className="floating-element z-10" style={{ top: "60%", left: "85%", animationDelay: "5.5s" }}></div>
+      <div className="floating-element z-10" style={{ top: "40%", left: "10%", animationDelay: "6s" }}></div>
+      <div className="floating-element z-10" style={{ top: "75%", left: "90%", animationDelay: "6.5s" }}></div>
 
       <div className="relative z-10 min-h-screen flex flex-col justify-between items-center px-8 py-12 md:px-16 md:py-20">
         {/* Top tagline */}
