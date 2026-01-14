@@ -20,11 +20,24 @@ export const metadata: Metadata = {
   description: "Reliable. Strong. Built for West Texas. Rain Roofing Pros offers roof replacement, repairs, inspections, and emergency services in Lubbock, TX. Free estimates, 24/7 emergency service, insurance assistance.",
   keywords: "roofing, Lubbock, Texas, roof repair, roof replacement, storm damage, emergency roofing, insurance claims, West Texas",
   authors: [{ name: "Rain Roofing Pros" }],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Rain Roofing Pros | Lubbock, TX Roofing Experts",
     description: "Reliable. Strong. Built for West Texas. Professional roofing services in Lubbock - repairs, replacements, inspections & emergency services.",
-    url: "https://www.rainroofingpros.com",
+    url: "https://rain.haestus.dev",
     siteName: "Rain Roofing Pros",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Rain Roofing - Your Trusted West Texas Roofing Experts",
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
@@ -32,6 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rain Roofing Pros | Lubbock, TX Roofing Experts",
     description: "Reliable. Strong. Built for West Texas. Professional roofing services in Lubbock.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -46,9 +60,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="https://static.cdn-website.com/runtime/favicon_d1_res.ico" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
