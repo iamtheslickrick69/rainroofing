@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { Camera, FileText, ClipboardCheck, Users, Wrench, Phone } from "lucide-react";
 
@@ -84,6 +86,7 @@ export default function InsuranceClaimAssistancePage() {
         title="Insurance Claim Assistance"
         subtitle="We Handle the Paperwork"
         description="Dealing with roof damage can be stressful, especially when it comes to insurance claims. At Rain Roofing, we make the process simple for homeowners in Lubbock. Our team helps you document damage, file your claim, and work with your insurance company to get the coverage you deserve."
+        image={`${CDN}/000NEWHOME.jpg`}
       />
 
       {/* 5 Steps Section */}

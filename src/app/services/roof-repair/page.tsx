@@ -1,5 +1,7 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceFAQ } from "@/components/sections/service-faq";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { Search, MessageSquare, Wrench, Package, Bell, CheckCircle, Phone, Droplets, CloudRain, Construction, CircleDot } from "lucide-react";
@@ -91,6 +93,7 @@ export default function RoofRepairPage() {
         title="Roof Repair"
         subtitle="Fast & Reliable"
         description="If your roof has been damaged by storms, sun, or just old age, we're here to help. We offer roof repairs for homes and businesses in Lubbock, Texas."
+        image={`${CDN}/000shingle.jpg`}
       />
 
       {/* Process Section */}

@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { Search, Home, Camera, ListChecks, Clock, DollarSign, Thermometer, CheckCircle, Phone } from "lucide-react";
 
@@ -92,6 +94,7 @@ export default function RoofInspectionsPage() {
         title="Roof Inspections"
         subtitle="Preventive Care"
         description="Regular roof inspections help prevent costly damage and keep your home safe from harsh weather. At Rain Roofing, we check for problems before they get worse, giving you peace of mind year-round."
+        image={`${CDN}/000NEWHOME.jpg`}
       />
 
       {/* What We Do Section */}

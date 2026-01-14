@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { CheckCircle, AlertTriangle, Phone } from "lucide-react";
 import Link from "next/link";
@@ -61,6 +63,7 @@ export default function StormDamagePage() {
         title="Storm Damage Roofing Services"
         subtitle="West Texas Weather Experts"
         description="When storms hit, they can leave your roof vulnerable to significant damage. Wind, hail, and heavy rain can result in leaks, missing shingles, and even structural issues. Our storm damage roofing services are designed to address these challenges head-on."
+        image={`${CDN}/000working.jpg`}
       />
 
       {/* Main Content */}

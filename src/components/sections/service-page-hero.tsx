@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Phone, ArrowRight } from "lucide-react";
 
@@ -9,11 +10,28 @@ interface ServicePageHeroProps {
   title: string;
   subtitle: string;
   description: string;
+  image?: string;
 }
 
-export function ServicePageHero({ title, subtitle, description }: ServicePageHeroProps) {
+export function ServicePageHero({ title, subtitle, description, image }: ServicePageHeroProps) {
   return (
-    <section className="pt-32 pb-20 bg-gradient-to-br from-[#1a1a1a] via-[#262626] to-[#1a1a1a] relative overflow-hidden">
+    <section className="pt-32 pb-20 relative overflow-hidden">
+      {/* Background Image or Gradient */}
+      {image ? (
+        <div className="absolute inset-0">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a1a]/95 via-[#1a1a1a]/80 to-[#1a1a1a]/60" />
+        </div>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#262626] to-[#1a1a1a]" />
+      )}
+
       {/* Grid Background */}
       <div className="absolute inset-0 opacity-20">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +45,7 @@ export function ServicePageHero({ title, subtitle, description }: ServicePageHer
       </div>
 
       {/* Blue accent line at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2563eb]"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2563eb] z-10"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl">

@@ -17,6 +17,7 @@ const projectImages = {
   spanish: `${CDN}/000spanish.jpg`,
   working: `${CDN}/000working.jpg`,
   modern: `${CDN}/000modern.jpg`,
+  solar: `${CDN}/0000solar.jpg`,
 }
 
 // Service area cities with approximate Texas coordinates
@@ -59,7 +60,7 @@ const roofTypes = [
   { name: "Shingle", image: projectImages.shingle, href: "/services/roof-replacement" },
   { name: "Metal", image: projectImages.metal, href: "/services/roof-premium" },
   { name: "Tile", image: projectImages.spanish, href: "/services/roof-premium" },
-  { name: "Modern", image: projectImages.modern, href: "/residential-roofing" },
+  { name: "Solar", image: projectImages.solar, href: "/services/roof-premium" },
 ]
 
 // Trust badges

@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { CheckCircle, Clock, Shield, Phone } from "lucide-react";
 
@@ -51,6 +53,7 @@ export default function EmergencyRoofServicesPage() {
         title="Emergency Roof Services"
         subtitle="24/7 Availability"
         description="Unpredictable weather can lead to sudden and severe roofing issues. Whether it's a major storm, high winds, or hail, our emergency roof services are designed to address urgent situations swiftly and effectively, ensuring your home remains safe and secure."
+        image={`${CDN}/000working.jpg`}
       />
 
       {/* Main Content */}

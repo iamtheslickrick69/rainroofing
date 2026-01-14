@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { ServiceCTA } from "@/components/sections/service-cta";
 import { MessageSquare, ClipboardList, FileText, Calendar, Hammer, CheckCircle, Phone } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -84,6 +86,7 @@ export default function RoofReplacementPage() {
         title="Roof Replacement Services"
         subtitle="Complete Solutions"
         description="When it's time to replace your roof, you want to ensure that the job is handled with care, precision, and expertise. We specialize in providing comprehensive roof replacement services tailored to the unique needs of homeowners in Lubbock, Texas."
+        image={`${CDN}/000shingle.jpg`}
       />
 
       {/* Materials Section */}

@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ServicePageHero } from "@/components/sections/service-page-hero";
 import { ServiceFAQ } from "@/components/sections/service-faq";
+
+const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev";
 import { Crown, Calendar, Sparkles, Zap, Shield, CheckCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -75,6 +77,7 @@ export default function RoofPremiumPage() {
         title="Roof Premium Services"
         subtitle="Exclusive Membership"
         description="Keeping your roof in top shape shouldn't be a hassle. That's why we're launching Roof Premium, a subscription-based service designed for homeowners in Lubbock who want peace of mind without lifting a finger."
+        image={`${CDN}/0000solar.jpg`}
       />
 
       {/* Main Content */}
