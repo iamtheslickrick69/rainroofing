@@ -28,6 +28,11 @@ const nextConfig: NextConfig = {
         hostname: "static.cdn-website.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev",
+        pathname: "/**",
+      },
     ],
   },
 };
