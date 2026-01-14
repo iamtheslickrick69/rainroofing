@@ -1,170 +1,354 @@
 'use client'
 
 import Link from 'next/link'
-import { Activity, ArrowRight, Phone, Shield, MapPin, Star, Clock, CheckCircle } from 'lucide-react'
-import DottedMap from 'dotted-map'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from 'recharts'
-import { Card } from '@/components/ui/card'
+import Image from 'next/image'
+import { ArrowRight, Phone, Shield, Star, Clock, CheckCircle, Award, BadgeCheck, Zap, Users, Home } from 'lucide-react'
 import * as React from "react"
 
-// Service area cities in West Texas
+// Service area cities with approximate Texas coordinates
 const serviceAreas = [
-  { name: 'Lubbock', primary: true },
-  { name: 'Levelland' },
-  { name: 'Plainview' },
-  { name: 'Brownfield' },
-  { name: 'Slaton' },
-  { name: 'Wolfforth' },
+  { name: 'Lubbock', x: 50, y: 45, primary: true },
+  { name: 'Levelland', x: 42, y: 43 },
+  { name: 'Plainview', x: 55, y: 32 },
+  { name: 'Brownfield', x: 43, y: 55 },
+  { name: 'Slaton', x: 55, y: 50 },
+  { name: 'Wolfforth', x: 46, y: 48 },
+  { name: 'Littlefield', x: 48, y: 35 },
+  { name: 'Shallowater', x: 48, y: 42 },
 ]
 
-// Real testimonials from the site
+// Real testimonials with ratings
 const testimonials = [
   {
     name: "James R.",
-    time: "Verified",
-    content: "Rain Roofing made the whole process easy! Professional and honest.",
-    color: "from-blue-500 to-blue-700",
+    location: "Lubbock, TX",
+    rating: 5,
+    content: "Rain Roofing made the whole process easy! Professional, honest, and the roof looks amazing. Highly recommend!",
+    platform: "Google",
+    image: "/testimonials/james.jpg"
   },
   {
     name: "Sherry May",
-    time: "Verified",
-    content: "Great service and fair pricing! Gavin was such a big help.",
-    color: "from-blue-400 to-indigo-600",
+    location: "Wolfforth, TX",
+    rating: 5,
+    content: "Great service and fair pricing! Gavin was such a big help with everything. They cleaned up perfectly after.",
+    platform: "Google",
+    image: "/testimonials/sherry.jpg"
   },
   {
     name: "Emily T.",
-    time: "Verified",
-    content: "They handled everything, including my insurance claim. 5 stars!",
-    color: "from-sky-400 to-blue-600",
-  },
-  {
-    name: "Recent Project",
-    time: "This week",
-    content: "Roof replacement completed in Lubbock - 2,400 sq ft.",
-    color: "from-emerald-400 to-blue-500",
+    location: "Lubbock, TX",
+    rating: 5,
+    content: "They handled everything, including my insurance claim. Couldn't be happier with the results!",
+    platform: "Yelp",
+    image: "/testimonials/emily.jpg"
   },
 ]
 
-// Growth data for the chart
-const chartData = [
-  { year: '2019', roofs: 45 },
-  { year: '2020', roofs: 89 },
-  { year: '2021', roofs: 156 },
-  { year: '2022', roofs: 234 },
-  { year: '2023', roofs: 389 },
-  { year: '2024', roofs: 520 },
+// Trust badges/certifications
+const trustBadges = [
+  { icon: Shield, label: "Licensed & Insured" },
+  { icon: Award, label: "5-Year Warranty" },
+  { icon: BadgeCheck, label: "BBB Accredited" },
+  { icon: Zap, label: "Same-Day Estimates" },
 ]
 
 export function BentoGrid() {
   return (
-    <section className="py-16 bg-[#fafafa]">
+    <section className="py-20 bg-[#fafafa]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <p className="text-[#2563eb] font-semibold uppercase tracking-wider mb-2">Why Rain Roofing</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#171717]">
-            Your Trusted West Texas Roofers
+        <div className="text-center mb-16">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2563eb]/10 text-[#2563eb] text-sm font-medium mb-4">
+            <Star className="w-4 h-4 fill-current" />
+            Trusted by 500+ West Texas Homeowners
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-[#171717] mb-4">
+            Why Choose <span className="text-[#2563eb]">Rain Roofing</span>?
           </h2>
+          <p className="text-lg text-[#525252] max-w-2xl mx-auto">
+            Local expertise, quality craftsmanship, and unmatched customer service since 2019.
+          </p>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-          {/* 1. MAP - Top Left */}
-          <div className="relative overflow-hidden bg-[#1a1a1a] border border-[#404040] p-6 md:rounded-tl-2xl">
-            <div className="flex items-center gap-2 text-sm text-[#a3a3a3] mb-4">
-              <MapPin className="w-4 h-4 text-[#2563eb]" />
-              Service Area
+        {/* Bento Grid - Asymmetric Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+
+          {/* 1. LARGE STATS CARD - Spans 7 columns */}
+          <div className="md:col-span-7 bg-[#1a1a1a] rounded-3xl p-8 md:p-10 relative overflow-hidden group">
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <svg className="w-full h-full">
+                <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+              </svg>
             </div>
-            <h3 className="text-xl font-normal text-white">
-              Serving Lubbock & West Texas.{" "}
-              <span className="text-[#a3a3a3]">Quality roofing for your community.</span>
+
+            <div className="relative z-10">
+              <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Our Track Record</span>
+
+              <div className="grid grid-cols-3 gap-6 mt-8">
+                <div className="text-center md:text-left">
+                  <p className="text-5xl md:text-7xl font-bold text-white">500<span className="text-[#2563eb]">+</span></p>
+                  <p className="text-[#a3a3a3] mt-2 text-sm md:text-base">Roofs Completed</p>
+                </div>
+                <div className="text-center md:text-left">
+                  <p className="text-5xl md:text-7xl font-bold text-white">5.0</p>
+                  <div className="flex items-center justify-center md:justify-start gap-1 mt-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#fbbf24] text-[#fbbf24]" />
+                    ))}
+                  </div>
+                  <p className="text-[#a3a3a3] text-sm md:text-base">Rating</p>
+                </div>
+                <div className="text-center md:text-left">
+                  <p className="text-5xl md:text-7xl font-bold text-white">24<span className="text-[#2563eb]">hr</span></p>
+                  <p className="text-[#a3a3a3] mt-2 text-sm md:text-base">Response Time</p>
+                </div>
+              </div>
+
+              {/* Mini testimonial preview */}
+              <div className="mt-10 pt-8 border-t border-[#404040]">
+                <div className="flex items-center gap-4">
+                  <div className="flex -space-x-3">
+                    {[1,2,3,4].map((i) => (
+                      <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] border-2 border-[#1a1a1a] flex items-center justify-center">
+                        <Users className="w-5 h-5 text-white" />
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">Trusted by homeowners</p>
+                    <p className="text-[#a3a3a3] text-sm">across Lubbock & West Texas</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 2. TEXAS MAP - Spans 5 columns */}
+          <div className="md:col-span-5 bg-[#1a1a1a] rounded-3xl p-6 md:p-8 relative overflow-hidden">
+            <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Service Area</span>
+            <h3 className="text-2xl font-bold text-white mt-2">
+              Proudly Serving West Texas
             </h3>
 
             <div className="relative mt-6">
-              <div className="absolute top-12 left-1/2 -translate-x-1/2 z-10 px-4 py-2 bg-[#2563eb] text-white rounded-full text-sm font-medium shadow-lg flex items-center gap-2">
-                <MapPin className="w-4 h-4" /> Based in Lubbock, TX
-              </div>
-              <TexasMap />
+              <TexasMapSVG />
+
+              {/* City markers */}
+              {serviceAreas.map((city, i) => (
+                <div
+                  key={i}
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${city.x}%`, top: `${city.y}%` }}
+                >
+                  {city.primary ? (
+                    <div className="relative">
+                      <div className="w-4 h-4 bg-[#2563eb] rounded-full animate-ping absolute" />
+                      <div className="w-4 h-4 bg-[#2563eb] rounded-full relative z-10 border-2 border-white" />
+                      <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-white text-xs font-bold whitespace-nowrap bg-[#2563eb] px-2 py-0.5 rounded">
+                        {city.name}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="group/marker relative cursor-pointer">
+                      <div className="w-2.5 h-2.5 bg-[#60a5fa] rounded-full border border-white/50 group-hover/marker:scale-150 transition-transform" />
+                      <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[#a3a3a3] text-[10px] whitespace-nowrap opacity-0 group-hover/marker:opacity-100 transition-opacity">
+                        {city.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
 
-            {/* Service cities */}
-            <div className="flex flex-wrap gap-2 mt-4">
-              {serviceAreas.map((city, i) => (
+            {/* Service area tags */}
+            <div className="flex flex-wrap gap-2 mt-8">
+              {serviceAreas.slice(0, 6).map((city, i) => (
                 <span
                   key={i}
-                  className={`px-3 py-1 rounded-full text-xs ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     city.primary
                       ? 'bg-[#2563eb] text-white'
-                      : 'bg-[#262626] text-[#a3a3a3]'
+                      : 'bg-[#262626] text-[#a3a3a3] hover:bg-[#404040]'
                   }`}
                 >
                   {city.name}
                 </span>
               ))}
-            </div>
-          </div>
-
-          {/* 2. TESTIMONIALS - Top Right */}
-          <div className="flex flex-col justify-between gap-4 p-6 border border-[#e5e5e5] bg-white md:rounded-tr-2xl">
-            <div>
-              <span className="text-xs flex items-center gap-2 text-[#525252] mb-2">
-                <Star className="w-4 h-4 text-[#fbbf24]" /> 5-Star Reviews
+              <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-[#262626] text-[#2563eb]">
+                +More
               </span>
-              <h3 className="text-xl font-normal text-[#171717]">
-                Trusted by homeowners{" "}
-                <span className="text-[#525252]">across West Texas with 50+ five-star reviews.</span>
-              </h3>
             </div>
-            <TestimonialCards />
           </div>
 
-          {/* 3. STATS CHART - Bottom Left */}
-          <div className="border border-[#404040] bg-[#1a1a1a] p-6 space-y-4 md:rounded-bl-2xl">
-            <div className="flex items-center gap-2 text-sm text-[#a3a3a3] mb-4">
-              <Activity className="w-4 h-4 text-[#2563eb]" />
-              Track Record
+          {/* 3. TESTIMONIALS - Spans 8 columns */}
+          <div className="md:col-span-8 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Customer Reviews</span>
+                <h3 className="text-2xl font-bold text-[#171717] mt-1">
+                  What Our Customers Say
+                </h3>
+              </div>
+              <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-[#fafafa] rounded-full">
+                <Image src="https://www.google.com/favicon.ico" alt="Google" width={16} height={16} className="rounded" />
+                <span className="text-sm font-semibold text-[#171717]">4.9</span>
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#fbbf24] text-[#fbbf24]" />
+                  ))}
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-normal text-white">
-              500+ Roofs Completed.{" "}
-              <span className="text-[#a3a3a3]">Growing trust in Lubbock since 2019.</span>
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {testimonials.map((item, i) => (
+                <div
+                  key={i}
+                  className="p-5 rounded-2xl bg-[#fafafa] border border-[#e5e5e5] hover:border-[#2563eb]/30 hover:shadow-lg hover:shadow-[#2563eb]/5 transition-all group"
+                >
+                  {/* Rating stars */}
+                  <div className="flex items-center gap-1 mb-3">
+                    {[...Array(item.rating)].map((_, j) => (
+                      <Star key={j} className="w-4 h-4 fill-[#fbbf24] text-[#fbbf24]" />
+                    ))}
+                    <span className="ml-2 text-xs text-[#a3a3a3] flex items-center gap-1">
+                      {item.platform === 'Google' ? (
+                        <Image src="https://www.google.com/favicon.ico" alt="Google" width={12} height={12} className="rounded" />
+                      ) : (
+                        <span className="w-3 h-3 bg-[#FF1A1A] rounded text-[8px] text-white flex items-center justify-center font-bold">Y</span>
+                      )}
+                      {item.platform}
+                    </span>
+                  </div>
+
+                  <p className="text-[#525252] text-sm leading-relaxed mb-4">
+                    &ldquo;{item.content}&rdquo;
+                  </p>
+
+                  <div className="flex items-center gap-3 pt-3 border-t border-[#e5e5e5]">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] flex items-center justify-center text-white font-bold text-sm">
+                      {item.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[#171717] text-sm flex items-center gap-1">
+                        {item.name}
+                        <BadgeCheck className="w-4 h-4 text-[#2563eb]" />
+                      </p>
+                      <p className="text-xs text-[#a3a3a3]">{item.location}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 4. CTA CARD - Spans 4 columns */}
+          <div className="md:col-span-4 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-3xl p-6 md:p-8 relative overflow-hidden group">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+
+            <div className="relative z-10 h-full flex flex-col">
+              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+                <Home className="w-7 h-7 text-white" />
+              </div>
+
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Free Roof Inspection
+              </h3>
+              <p className="text-white/80 mb-6 flex-grow">
+                Get a thorough assessment of your roof with no cost and no obligation. Our experts will provide honest recommendations.
+              </p>
+
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 w-full py-4 bg-white text-[#2563eb] font-semibold rounded-xl hover:bg-[#f0f0f0] transition-colors group"
+              >
+                Schedule Now
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+
+          {/* 5. TRUST BADGES - Full width */}
+          <div className="md:col-span-12 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+              {trustBadges.map((badge, i) => (
+                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-[#fafafa] transition-colors">
+                  <div className="w-12 h-12 bg-[#2563eb]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <badge.icon className="w-6 h-6 text-[#2563eb]" />
+                  </div>
+                  <span className="font-semibold text-[#171717]">{badge.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 6. EMERGENCY CTA - Spans 6 columns */}
+          <div className="md:col-span-6 bg-[#171717] rounded-3xl p-6 md:p-8 relative overflow-hidden">
+            <div className="flex flex-col md:flex-row md:items-center gap-6">
+              <div className="flex-grow">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="relative flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                  </span>
+                  <span className="text-red-400 text-sm font-semibold uppercase tracking-wider">24/7 Emergency</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  Storm Damage? We&apos;re Here.
+                </h3>
+                <p className="text-[#a3a3a3]">
+                  Fast response when you need us most. Call anytime, day or night.
+                </p>
+              </div>
+              <a
+                href="tel:806-808-1317"
+                className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-[#171717] font-bold rounded-xl hover:bg-[#f0f0f0] transition-colors whitespace-nowrap"
+              >
+                <Phone className="w-5 h-5" />
+                806-808-1317
+              </a>
+            </div>
+          </div>
+
+          {/* 7. PROCESS PREVIEW - Spans 6 columns */}
+          <div className="md:col-span-6 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]">
+            <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Simple Process</span>
+            <h3 className="text-2xl font-bold text-[#171717] mt-2 mb-6">
+              How We Work
             </h3>
 
-            {/* Stats row */}
-            <div className="grid grid-cols-3 gap-4 py-4">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-[#2563eb]">500+</p>
-                <p className="text-xs text-[#a3a3a3]">Roofs Done</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-[#2563eb]">5.0</p>
-                <p className="text-xs text-[#a3a3a3]">Star Rating</p>
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-bold text-[#2563eb]">24hr</p>
-                <p className="text-xs text-[#a3a3a3]">Response</p>
-              </div>
+            <div className="flex items-center gap-4">
+              {[
+                { num: '01', label: 'Free Inspection' },
+                { num: '02', label: 'Get Quote' },
+                { num: '03', label: 'We Build' },
+              ].map((step, i) => (
+                <React.Fragment key={i}>
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl font-bold text-[#2563eb]">{step.num}</span>
+                    <span className="text-sm font-medium text-[#525252]">{step.label}</span>
+                  </div>
+                  {i < 2 && (
+                    <ArrowRight className="w-5 h-5 text-[#d4d4d4] flex-shrink-0" />
+                  )}
+                </React.Fragment>
+              ))}
             </div>
 
-            <GrowthChart />
-          </div>
-
-          {/* 4. FEATURE CARDS - Bottom Right */}
-          <div className="grid sm:grid-cols-2 md:rounded-br-2xl overflow-hidden">
-            <FeatureCard
-              icon={<CheckCircle className="w-4 h-4" />}
-              title="Free Inspections"
-              subtitle="No Cost, No Obligation"
-              description="Get a thorough roof assessment and honest recommendation."
+            <Link
               href="/contact"
-            />
-            <FeatureCard
-              icon={<Clock className="w-4 h-4" />}
-              title="24/7 Emergency"
-              subtitle="Storm Damage?"
-              description="We respond fast when you need us most. Call anytime."
-              href="tel:806-808-1317"
-              isPhone
-            />
+              className="mt-6 inline-flex items-center gap-2 text-[#2563eb] font-semibold hover:gap-3 transition-all"
+            >
+              Start Your Project
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </div>
@@ -172,155 +356,68 @@ export function BentoGrid() {
   )
 }
 
-// Feature Card Component
-function FeatureCard({
-  icon,
-  title,
-  subtitle,
-  description,
-  href,
-  isPhone
-}: {
-  icon: React.ReactNode
-  title: string
-  subtitle: string
-  description: string
-  href: string
-  isPhone?: boolean
-}) {
-  const Component = isPhone ? 'a' : Link
-
+// Texas Map SVG Component
+function TexasMapSVG() {
   return (
-    <Component
-      href={href}
-      className="relative flex flex-col gap-3 p-6 border border-[#e5e5e5] bg-white hover:bg-[#fafafa] transition group"
+    <svg
+      viewBox="0 0 100 100"
+      className="w-full h-auto"
+      style={{ maxHeight: '200px' }}
     >
-      <div>
-        <span className="text-xs flex items-center gap-2 text-[#525252] mb-3">
-          {icon}
-          {title}
-        </span>
-        <h3 className="text-lg font-semibold text-[#171717]">
-          {subtitle}
-        </h3>
-        <p className="text-sm text-[#525252] mt-1">{description}</p>
-      </div>
-
-      {/* Arrow button */}
-      <div className="absolute bottom-4 right-4 p-3 flex items-center gap-2 border border-[#e5e5e5] rounded-full group-hover:bg-[#2563eb] group-hover:border-[#2563eb] group-hover:-rotate-45 transition-all bg-white">
-        <ArrowRight className="w-4 h-4 text-[#2563eb] group-hover:text-white" />
-      </div>
-
-      {isPhone && (
-        <div className="mt-4 flex items-center gap-2 text-[#2563eb] font-semibold">
-          <Phone className="w-4 h-4" />
-          806-808-1317
-        </div>
-      )}
-    </Component>
-  )
-}
-
-// Texas-focused Map
-const map = new DottedMap({ height: 60, grid: 'diagonal' })
-const points = map.getPoints()
-
-const TexasMap = () => (
-  <svg viewBox="0 0 120 60" className="w-full h-auto opacity-40">
-    {points.map((point, i) => (
-      <circle
-        key={i}
-        cx={point.x}
-        cy={point.y}
-        r={0.2}
-        fill="#2563eb"
-        opacity={0.6}
+      {/* Texas outline - simplified */}
+      <path
+        d="M 20 10
+           L 65 10
+           L 65 25
+           L 95 25
+           L 95 55
+           L 75 70
+           L 60 95
+           L 45 75
+           L 25 75
+           L 20 60
+           L 5 55
+           L 5 25
+           L 20 10 Z"
+        fill="none"
+        stroke="#2563eb"
+        strokeWidth="0.5"
+        opacity="0.3"
       />
-    ))}
-    {/* Lubbock highlight */}
-    <circle cx="35" cy="28" r="3" fill="#2563eb" opacity={0.8}>
-      <animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite" />
-      <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite" />
-    </circle>
-  </svg>
-)
 
-// Growth Chart
-function GrowthChart() {
-  return (
-    <div className="h-40 w-full">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={chartData}>
-          <defs>
-            <linearGradient id="colorRoofs" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#2563eb" stopOpacity={0.8}/>
-              <stop offset="95%" stopColor="#2563eb" stopOpacity={0.1}/>
-            </linearGradient>
-          </defs>
-          <XAxis dataKey="year" hide />
-          <YAxis hide />
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#404040" />
-          <Tooltip
-            contentStyle={{
-              backgroundColor: '#262626',
-              border: '1px solid #404040',
-              borderRadius: '8px',
-              color: '#fff'
-            }}
-            formatter={(value) => [`${value} roofs`, 'Completed']}
-          />
-          <Area
-            type="monotone"
-            dataKey="roofs"
-            stroke="#2563eb"
-            strokeWidth={2}
-            fillOpacity={1}
-            fill="url(#colorRoofs)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
-  )
-}
+      {/* Fill with subtle gradient */}
+      <defs>
+        <radialGradient id="texasGradient" cx="50%" cy="45%" r="50%">
+          <stop offset="0%" stopColor="#2563eb" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#2563eb" stopOpacity="0.02" />
+        </radialGradient>
+      </defs>
+      <path
+        d="M 20 10
+           L 65 10
+           L 65 25
+           L 95 25
+           L 95 55
+           L 75 70
+           L 60 95
+           L 45 75
+           L 25 75
+           L 20 60
+           L 5 55
+           L 5 25
+           L 20 10 Z"
+        fill="url(#texasGradient)"
+      />
 
-// Testimonial Cards with animation
-const TestimonialCards = () => {
-  return (
-    <div className="w-full h-[260px] overflow-hidden relative">
-      {/* Fade overlay */}
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none"></div>
-
-      <div className="space-y-3">
-        {testimonials.map((item, i) => (
-          <div
-            key={i}
-            className="flex gap-3 items-start p-4 border border-[#e5e5e5] rounded-xl bg-[#fafafa] hover:border-[#2563eb] transition-colors cursor-default animate-scaleUp"
-            style={{
-              animationDelay: `${i * 200}ms`,
-              animationFillMode: "forwards",
-              opacity: 0,
-            }}
-          >
-            <div
-              className={`w-10 h-10 min-w-[2.5rem] min-h-[2.5rem] rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center`}
-            >
-              <Star className="w-5 h-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2 text-sm font-semibold text-[#171717]">
-                {item.name}
-                <span className="text-xs text-[#a3a3a3] font-normal flex items-center gap-1">
-                  <CheckCircle className="w-3 h-3 text-[#2563eb]" />
-                  {item.time}
-                </span>
-              </div>
-              <p className="text-sm text-[#525252] mt-1 line-clamp-2">
-                {item.content}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+      {/* Grid lines inside Texas */}
+      <g stroke="#2563eb" strokeWidth="0.2" opacity="0.1">
+        <line x1="10" y1="30" x2="90" y2="30" />
+        <line x1="10" y1="50" x2="90" y2="50" />
+        <line x1="10" y1="70" x2="70" y2="70" />
+        <line x1="30" y1="10" x2="30" y2="75" />
+        <line x1="50" y1="10" x2="50" y2="90" />
+        <line x1="70" y1="25" x2="70" y2="70" />
+      </g>
+    </svg>
   )
 }
