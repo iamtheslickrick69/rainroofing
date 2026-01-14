@@ -1,21 +1,23 @@
 import { HeroSection } from "@/components/ui/hero-section";
-import { BentoGrid } from "@/components/sections/bento-grid";
+import { RoofTypesBento } from "@/components/sections/roof-types-bento";
 import { ServicesSection } from "@/components/sections/services-section";
-import { ProcessSection } from "@/components/sections/process-section";
+import { ProcessAccordion } from "@/components/sections/process-accordion";
 import { TrustSection } from "@/components/sections/trust-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { PremiumTestimonials } from "@/components/ui/premium-testimonials";
 import { FAQSection } from "@/components/sections/faq-section";
+import { ContactSection } from "@/components/sections/contact-section";
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <BentoGrid />
+      <RoofTypesBento />
       <ServicesSection />
-      <ProcessSection />
+      <ProcessAccordion />
       <TrustSection />
-      <TestimonialsSection />
+      <PremiumTestimonials />
       <FAQSection />
+      <ContactSection />
     </>
   );
 }

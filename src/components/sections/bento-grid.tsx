@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Phone, Shield, Star, Award, BadgeCheck, Zap, Users, Home, ChevronRight } from 'lucide-react'
 import * as React from "react"
+import { motion, useInView } from 'framer-motion'
+import { FadeUp, ScaleUp, StaggerContainer, StaggerItem, HoverScale } from '@/components/ui/motion'
 
 // CDN Base URL
 const CDN = "https://pub-82e4016d6e17421ebc1eaa174644bee3.r2.dev"
@@ -71,47 +73,90 @@ const trustBadges = [
   { icon: Zap, label: "Same-Day Estimates" },
 ]
 
+// Counter animation component
+function AnimatedNumber({ value, suffix = "" }: { value: string; suffix?: string }) {
+  const ref = React.useRef(null)
+  const isInView = useInView(ref, { once: true })
+
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      {value}<span className="text-[#2563eb]">{suffix}</span>
+    </motion.span>
+  )
+}
+
 export function BentoGrid() {
   return (
-    <section className="py-20 bg-[#fafafa]">
+    <section className="py-20 bg-[#fafafa] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2563eb]/10 text-[#2563eb] text-sm font-medium mb-4">
-            <Star className="w-4 h-4 fill-current" />
-            Trusted by 500+ West Texas Homeowners
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-[#171717] mb-4">
-            Why Choose <span className="text-[#2563eb]">Rain Roofing</span>?
-          </h2>
-          <p className="text-lg text-[#525252] max-w-2xl mx-auto">
-            Local expertise, quality craftsmanship, and unmatched customer service since 2019.
-          </p>
-        </div>
+        <FadeUp>
+          <div className="text-center mb-16">
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2563eb]/10 text-[#2563eb] text-sm font-medium mb-4"
+            >
+              <Star className="w-4 h-4 fill-current" />
+              Trusted by 500+ West Texas Homeowners
+            </motion.span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[#171717] mb-4">
+              Why Choose <span className="text-[#2563eb]">Rain Roofing</span>?
+            </h2>
+            <p className="text-lg text-[#525252] max-w-2xl mx-auto">
+              Local expertise, quality craftsmanship, and unmatched customer service since 2019.
+            </p>
+          </div>
+        </FadeUp>
 
         {/* Bento Grid - Asymmetric Layout */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
 
           {/* 1. FEATURED PROJECT IMAGE - Spans 5 columns */}
-          <div className="md:col-span-5 relative rounded-3xl overflow-hidden h-[400px] group">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-5 relative rounded-3xl overflow-hidden h-[400px] group cursor-pointer"
+          >
             <Image
               src={projectImages.newHome}
               alt="New home roofing project in Lubbock"
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="absolute bottom-0 left-0 right-0 p-6"
+            >
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#2563eb] text-white text-xs font-medium mb-3">
                 <Star className="w-3 h-3 fill-current" /> Featured Project
               </span>
               <h3 className="text-2xl font-bold text-white mb-1">New Construction</h3>
               <p className="text-white/80 text-sm">Complete roofing for new builds in West Texas</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* 2. STATS CARD - Spans 7 columns */}
-          <div className="md:col-span-7 bg-[#1a1a1a] rounded-3xl p-8 md:p-10 relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-7 bg-[#1a1a1a] rounded-3xl p-8 md:p-10 relative overflow-hidden"
+          >
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-5">
               <svg className="w-full h-full">
@@ -127,32 +172,59 @@ export function BentoGrid() {
 
               <div className="grid grid-cols-3 gap-6 mt-8">
                 <div className="text-center md:text-left">
-                  <p className="text-5xl md:text-7xl font-bold text-white">500<span className="text-[#2563eb]">+</span></p>
+                  <p className="text-5xl md:text-7xl font-bold text-white">
+                    <AnimatedNumber value="500" suffix="+" />
+                  </p>
                   <p className="text-[#a3a3a3] mt-2 text-sm md:text-base">Roofs Completed</p>
                 </div>
                 <div className="text-center md:text-left">
-                  <p className="text-5xl md:text-7xl font-bold text-white">5.0</p>
+                  <p className="text-5xl md:text-7xl font-bold text-white">
+                    <AnimatedNumber value="5.0" />
+                  </p>
                   <div className="flex items-center justify-center md:justify-start gap-1 mt-2">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-[#fbbf24] text-[#fbbf24]" />
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
+                      >
+                        <Star className="w-4 h-4 fill-[#fbbf24] text-[#fbbf24]" />
+                      </motion.div>
                     ))}
                   </div>
                   <p className="text-[#a3a3a3] text-sm md:text-base">Rating</p>
                 </div>
                 <div className="text-center md:text-left">
-                  <p className="text-5xl md:text-7xl font-bold text-white">24<span className="text-[#2563eb]">hr</span></p>
+                  <p className="text-5xl md:text-7xl font-bold text-white">
+                    <AnimatedNumber value="24" suffix="hr" />
+                  </p>
                   <p className="text-[#a3a3a3] mt-2 text-sm md:text-base">Response Time</p>
                 </div>
               </div>
 
               {/* Mini testimonial preview */}
-              <div className="mt-10 pt-8 border-t border-[#404040]">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mt-10 pt-8 border-t border-[#404040]"
+              >
                 <div className="flex items-center gap-4">
                   <div className="flex -space-x-3">
                     {[1,2,3,4].map((i) => (
-                      <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] border-2 border-[#1a1a1a] flex items-center justify-center">
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.3, delay: 0.6 + i * 0.1 }}
+                        className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] border-2 border-[#1a1a1a] flex items-center justify-center"
+                      >
                         <Users className="w-5 h-5 text-white" />
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                   <div>
@@ -160,12 +232,18 @@ export function BentoGrid() {
                     <p className="text-[#a3a3a3] text-sm">across Lubbock & West Texas</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* 3. ROOF TYPES GALLERY - Spans 8 columns */}
-          <div className="md:col-span-8 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-8 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]"
+          >
             <div className="flex items-center justify-between mb-6">
               <div>
                 <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Our Expertise</span>
@@ -180,36 +258,68 @@ export function BentoGrid() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {roofTypes.map((type, i) => (
-                <Link
+                <motion.div
                   key={i}
-                  href={type.href}
-                  className="relative h-32 md:h-40 rounded-2xl overflow-hidden group"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <Image
-                    src={type.image}
-                    alt={`${type.name} roofing`}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <span className="absolute bottom-3 left-3 text-white font-semibold text-sm">
-                    {type.name}
-                  </span>
-                </Link>
+                  <Link
+                    href={type.href}
+                    className="relative h-32 md:h-40 rounded-2xl overflow-hidden group block"
+                  >
+                    <Image
+                      src={type.image}
+                      alt={`${type.name} roofing`}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent group-hover:from-[#2563eb]/70 transition-all duration-300" />
+                    <span className="absolute bottom-3 left-3 text-white font-semibold text-sm">
+                      {type.name}
+                    </span>
+                  </Link>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* 4. CTA CARD - Spans 4 columns */}
-          <div className="md:col-span-4 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-3xl p-6 md:p-8 relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            whileHover={{ scale: 1.02 }}
+            className="md:col-span-4 bg-gradient-to-br from-[#2563eb] to-[#1d4ed8] rounded-3xl p-6 md:p-8 relative overflow-hidden cursor-pointer"
+          >
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+            <motion.div
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.1, 0.2, 0.1],
+              }}
+              transition={{ duration: 4, repeat: Infinity }}
+              className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full -translate-y-1/2 translate-x-1/2"
+            />
+            <motion.div
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.05, 0.1, 0.05],
+              }}
+              transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+              className="absolute bottom-0 left-0 w-24 h-24 bg-white rounded-full translate-y-1/2 -translate-x-1/2"
+            />
 
             <div className="relative z-10 h-full flex flex-col">
-              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6">
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-6"
+              >
                 <Home className="w-7 h-7 text-white" />
-              </div>
+              </motion.div>
 
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
                 Free Roof Inspection
@@ -220,31 +330,43 @@ export function BentoGrid() {
 
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 w-full py-4 bg-white text-[#2563eb] font-semibold rounded-xl hover:bg-[#f0f0f0] transition-colors"
+                className="inline-flex items-center justify-center gap-2 w-full py-4 bg-white text-[#2563eb] font-semibold rounded-xl hover:bg-[#f0f0f0] transition-colors group"
               >
                 Schedule Now
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           {/* 5. WORKING CREW IMAGE - Spans 4 columns */}
-          <div className="md:col-span-4 relative rounded-3xl overflow-hidden h-[280px] group">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-4 relative rounded-3xl overflow-hidden h-[280px] group cursor-pointer"
+          >
             <Image
               src={projectImages.working}
               alt="Rain Roofing crew working on shingle installation"
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <h3 className="text-xl font-bold text-white mb-1">Expert Installation</h3>
               <p className="text-white/80 text-sm">Skilled crews with years of experience</p>
             </div>
-          </div>
+          </motion.div>
 
           {/* 6. TESTIMONIALS - Spans 8 columns */}
-          <div className="md:col-span-8 bg-[#1a1a1a] rounded-3xl p-6 md:p-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-8 bg-[#1a1a1a] rounded-3xl p-6 md:p-8"
+          >
             <div className="flex items-center justify-between mb-6">
               <div>
                 <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Reviews</span>
@@ -252,21 +374,32 @@ export function BentoGrid() {
                   What Customers Say
                 </h3>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#262626] rounded-full">
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex items-center gap-2 px-4 py-2 bg-[#262626] rounded-full"
+              >
                 <span className="text-sm font-semibold text-white">5.0</span>
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-3.5 h-3.5 fill-[#fbbf24] text-[#fbbf24]" />
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-4">
               {testimonials.map((item, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="p-5 rounded-2xl bg-[#262626] border border-[#404040] hover:border-[#2563eb]/50 transition-all"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.15 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="p-5 rounded-2xl bg-[#262626] border border-[#404040] hover:border-[#2563eb]/50 transition-all cursor-pointer"
                 >
                   {/* Rating stars */}
                   <div className="flex items-center gap-1 mb-3">
@@ -291,13 +424,19 @@ export function BentoGrid() {
                       <p className="text-xs text-[#a3a3a3]">{item.location}</p>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* 7. TEXAS MAP - Spans 4 columns */}
-          <div className="md:col-span-4 bg-[#1a1a1a] rounded-3xl p-6 relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-4 bg-[#1a1a1a] rounded-3xl p-6 relative overflow-hidden"
+          >
             <span className="text-[#2563eb] text-sm font-semibold uppercase tracking-wider">Service Area</span>
             <h3 className="text-xl font-bold text-white mt-2 mb-4">
               Serving West Texas
@@ -307,8 +446,12 @@ export function BentoGrid() {
               <TexasMapSVG />
               {/* City markers */}
               {serviceAreas.map((city, i) => (
-                <div
+                <motion.div
                   key={i}
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
                   className="absolute transform -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${city.x}%`, top: `${city.y}%` }}
                 >
@@ -320,43 +463,71 @@ export function BentoGrid() {
                   ) : (
                     <div className="w-2 h-2 bg-[#60a5fa] rounded-full border border-white/50" />
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
 
             {/* Service area tags */}
             <div className="flex flex-wrap gap-2 mt-4">
               {serviceAreas.map((city, i) => (
-                <span
+                <motion.span
                   key={i}
-                  className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, delay: 0.7 + i * 0.05 }}
+                  whileHover={{ scale: 1.1 }}
+                  className={`px-2.5 py-1 rounded-full text-xs font-medium cursor-pointer transition-all ${
                     city.primary
                       ? 'bg-[#2563eb] text-white'
-                      : 'bg-[#262626] text-[#a3a3a3]'
+                      : 'bg-[#262626] text-[#a3a3a3] hover:bg-[#2563eb] hover:text-white'
                   }`}
                 >
                   {city.name}
-                </span>
+                </motion.span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* 8. TRUST BADGES - Full width */}
-          <div className="md:col-span-12 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-12 bg-white rounded-3xl p-6 md:p-8 border border-[#e5e5e5]"
+          >
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
               {trustBadges.map((badge, i) => (
-                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl hover:bg-[#fafafa] transition-colors">
-                  <div className="w-12 h-12 bg-[#2563eb]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  className="flex items-center gap-4 p-4 rounded-2xl hover:bg-[#fafafa] transition-colors cursor-pointer"
+                >
+                  <motion.div
+                    whileHover={{ rotate: 10 }}
+                    className="w-12 h-12 bg-[#2563eb]/10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  >
                     <badge.icon className="w-6 h-6 text-[#2563eb]" />
-                  </div>
+                  </motion.div>
                   <span className="font-semibold text-[#171717]">{badge.label}</span>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* 9. EMERGENCY CTA - Spans 6 columns */}
-          <div className="md:col-span-6 bg-[#171717] rounded-3xl p-6 md:p-8 relative overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-6 bg-[#171717] rounded-3xl p-6 md:p-8 relative overflow-hidden"
+          >
             <div className="flex flex-col md:flex-row md:items-center gap-6">
               <div className="flex-grow">
                 <div className="flex items-center gap-2 mb-3">
@@ -373,30 +544,38 @@ export function BentoGrid() {
                   Fast response when you need us most.
                 </p>
               </div>
-              <a
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href="tel:806-808-1317"
                 className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-[#171717] font-bold rounded-xl hover:bg-[#f0f0f0] transition-colors whitespace-nowrap"
               >
                 <Phone className="w-5 h-5" />
                 806-808-1317
-              </a>
+              </motion.a>
             </div>
-          </div>
+          </motion.div>
 
           {/* 10. BARN AERIAL - Spans 6 columns */}
-          <div className="md:col-span-6 relative rounded-3xl overflow-hidden h-[200px] group">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="md:col-span-6 relative rounded-3xl overflow-hidden h-[200px] group cursor-pointer"
+          >
             <Image
               src={projectImages.barn}
               alt="Aerial view of barn roofing project"
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-500"
+              className="object-cover group-hover:scale-110 transition-transform duration-700"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent group-hover:from-[#2563eb]/60 transition-all duration-500" />
             <div className="absolute bottom-0 left-0 right-0 p-6">
               <h3 className="text-xl font-bold text-white mb-1">Commercial & Agricultural</h3>
               <p className="text-white/80 text-sm">Barns, warehouses, and large structures</p>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>
@@ -418,7 +597,11 @@ function TexasMapSVG() {
           <stop offset="100%" stopColor="#2563eb" stopOpacity="0.02" />
         </radialGradient>
       </defs>
-      <path
+      <motion.path
+        initial={{ pathLength: 0, opacity: 0 }}
+        whileInView={{ pathLength: 1, opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
         d="M 20 10 L 65 10 L 65 25 L 95 25 L 95 55 L 75 70 L 60 95 L 45 75 L 25 75 L 20 60 L 5 55 L 5 25 L 20 10 Z"
         fill="url(#texasGradient)"
         stroke="#2563eb"

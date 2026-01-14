@@ -14,7 +14,7 @@ const colors = {
   300: "#93c5fd",
   400: "#60a5fa",
   500: "#3b82f6",
-  600: "#2563eb",
+  600: "#404040",
   700: "#1d4ed8",
   800: "#1e40af",
   900: "#1e3a8a",
@@ -84,7 +84,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white overflow-hidden relative w-full">
+    <div id="hero" className="min-h-screen text-white overflow-hidden relative w-full">
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
@@ -95,9 +95,9 @@ export function HeroSection() {
           priority
         />
         {/* Dark overlay with gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a]/95 via-[#1a1a1a]/85 to-[#1a1a1a]/90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#262626]/95 via-[#262626]/85 to-[#262626]/90" />
         {/* Blue tint overlay */}
-        <div className="absolute inset-0 bg-[#2563eb]/5" />
+        <div className="absolute inset-0 bg-[#404040]/5" />
       </div>
 
       {/* Grid SVG Background */}
@@ -127,7 +127,7 @@ export function HeroSection() {
       </svg>
 
       {/* Blue accent line at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2563eb] z-20"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#404040] z-20"></div>
 
       {/* Corner elements */}
       <div className="corner-element top-8 left-8 z-10" style={{ animationDelay: "4s" }}>
@@ -149,88 +149,83 @@ export function HeroSection() {
       <div className="floating-element z-10" style={{ top: "40%", left: "10%", animationDelay: "6s" }}></div>
       <div className="floating-element z-10" style={{ top: "75%", left: "90%", animationDelay: "6.5s" }}></div>
 
-      <div className="relative z-10 min-h-screen flex flex-col justify-between items-center px-8 py-12 md:px-16 md:py-20">
-        {/* Top tagline */}
-        <div className="text-center">
-          <h2 className="text-xs md:text-sm font-mono font-light uppercase tracking-[0.2em] opacity-80" style={{ color: colors.gray400 }}>
-            <span className="word" data-delay="0">Welcome</span>
-            <span className="word" data-delay="200">to</span>
-            <span className="word" data-delay="400"><b className="text-white">Rain Roofing</b></span>
-            <span className="word" data-delay="600">—</span>
-            <span className="word" data-delay="800">Your</span>
-            <span className="word" data-delay="1000">trusted</span>
-            <span className="word" data-delay="1200">West Texas</span>
-            <span className="word" data-delay="1400">roofing experts.</span>
-          </h2>
-          <div
-            className="mt-4 w-16 h-px mx-auto opacity-30"
-            style={{ background: `linear-gradient(to right, transparent, ${colors[500]}, transparent)` }}
-          ></div>
-        </div>
-
-        {/* Main headline */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-6 py-12 md:px-16 md:py-20 pt-24">
+        {/* Main content - centered */}
         <div className="text-center max-w-5xl mx-auto relative">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extralight leading-tight tracking-tight text-white">
-            <div className="mb-4 md:mb-6">
-              <span className="word" data-delay="1600">Reliable.</span>
-              <span className="word" data-delay="1750">Strong.</span>
-              <span className="word" data-delay="1900">Built</span>
-              <span className="word" data-delay="2050">for</span>
-              <span className="word font-semibold" data-delay="2200" style={{ color: colors[500] }}>West Texas.</span>
-            </div>
-            <div className="text-2xl md:text-3xl lg:text-4xl font-thin leading-relaxed" style={{ color: colors.gray400 }}>
-              <span className="word" data-delay="2600">Roof</span>
-              <span className="word" data-delay="2750">inspections,</span>
-              <span className="word" data-delay="2900">repairs,</span>
-              <span className="word" data-delay="3050">replacements,</span>
-              <span className="word" data-delay="3200">and</span>
-              <span className="word" data-delay="3350">emergency</span>
-              <span className="word" data-delay="3500">services</span>
-              <span className="word" data-delay="3650">—</span>
-              <span className="word" data-delay="3800">all</span>
-              <span className="word" data-delay="3950">in</span>
-              <span className="word" data-delay="4100">Lubbock.</span>
+          {/* BIG Centered Logo */}
+          <div
+            className="mb-6 opacity-0"
+            style={{ animation: "word-appear 1s ease-out forwards", animationDelay: "0.2s" }}
+          >
+            <Image
+              src="https://lirp.cdn-website.com/ae93590e/dms3rep/multi/opt/Rain-Roofing-Company-Logo-2a6c5680-1920w.png"
+              alt="Rain Roofing"
+              width={400}
+              height={120}
+              className="h-48 md:h-64 lg:h-80 w-auto mx-auto"
+              priority
+            />
+          </div>
+
+          {/* Tagline under logo */}
+          <p
+            className="text-lg md:text-2xl font-light uppercase tracking-[0.25em] mb-10 opacity-0"
+            style={{ color: colors.gray400, animation: "word-appear 0.8s ease-out forwards", animationDelay: "0.6s" }}
+          >
+            Your Trusted West Texas Roofing Experts
+          </p>
+
+          {/* Main Headline */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extralight leading-tight tracking-tight text-white mb-6">
+            <div className="mb-2 md:mb-4">
+              <span className="word" data-delay="800">Reliable.</span>
+              <span className="word" data-delay="950">Strong.</span>
+              <span className="word" data-delay="1100">Built</span>
+              <span className="word" data-delay="1250">for</span>
+              <span className="word font-semibold" data-delay="1400" style={{ color: "#ffffff" }}>West Texas.</span>
             </div>
           </h1>
 
+          {/* Sub-headline */}
+          <p
+            className="text-xl md:text-2xl lg:text-3xl font-thin leading-relaxed mb-12 opacity-0"
+            style={{ color: colors.gray400, animation: "word-appear 0.8s ease-out forwards", animationDelay: "1.8s" }}
+          >
+            Roof inspections, repairs, replacements, and emergency services — all in Lubbock.
+          </p>
+
           {/* CTA Buttons */}
           <div
-            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center opacity-0"
-            style={{ animation: "word-appear 1s ease-out forwards", animationDelay: "4.5s" }}
+            className="flex flex-col sm:flex-row gap-4 justify-center opacity-0"
+            style={{ animation: "word-appear 1s ease-out forwards", animationDelay: "2.2s" }}
           >
-            <Button asChild size="lg" className="bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold px-8 py-6 text-lg">
-              <Link href="/contact">Get Free Inspection</Link>
+            <Button asChild size="lg" className="bg-white hover:bg-white/90 text-[#171717] font-bold px-10 py-7 text-lg rounded-xl shadow-lg shadow-white/10">
+              <Link href="/#contact">Get Free Inspection</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg">
+            <Button asChild size="lg" className="bg-transparent hover:bg-white/10 text-white font-semibold px-10 py-7 text-lg border-2 border-white rounded-xl">
               <Link href="tel:806-808-1317">Call 806-808-1317</Link>
             </Button>
           </div>
-        </div>
 
-        {/* Bottom tagline */}
-        <div className="text-center">
+          {/* Trust badges */}
           <div
-            className="mb-4 w-16 h-px mx-auto opacity-30"
-            style={{ background: `linear-gradient(to right, transparent, ${colors[500]}, transparent)` }}
-          ></div>
-          <h2 className="text-xs md:text-sm font-mono font-light uppercase tracking-[0.2em] opacity-80" style={{ color: colors.gray400 }}>
-            <span className="word" data-delay="4400">Free</span>
-            <span className="word" data-delay="4550">estimates</span>
-            <span className="word" data-delay="4700">•</span>
-            <span className="word" data-delay="4850">24/7</span>
-            <span className="word" data-delay="5000">emergency</span>
-            <span className="word" data-delay="5150">service</span>
-            <span className="word" data-delay="5300">•</span>
-            <span className="word" data-delay="5450">Insurance</span>
-            <span className="word" data-delay="5600">assistance</span>
-          </h2>
-          <div
-            className="mt-6 flex justify-center space-x-4 opacity-0"
-            style={{ animation: "word-appear 1s ease-out forwards", animationDelay: "5.8s" }}
+            className="mt-12 flex flex-wrap items-center justify-center gap-6 md:gap-10 opacity-0"
+            style={{ animation: "word-appear 0.8s ease-out forwards", animationDelay: "2.6s" }}
           >
-            <div className="w-1 h-1 rounded-full opacity-40" style={{ background: colors[500] }}></div>
-            <div className="w-1 h-1 rounded-full opacity-60" style={{ background: colors[500] }}></div>
-            <div className="w-1 h-1 rounded-full opacity-40" style={{ background: colors[500] }}></div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-white">24/7</p>
+              <p className="text-xs uppercase tracking-wider" style={{ color: colors.gray400 }}>Emergency Service</p>
+            </div>
+            <div className="w-px h-10 bg-white/20 hidden md:block"></div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-white">Free</p>
+              <p className="text-xs uppercase tracking-wider" style={{ color: colors.gray400 }}>Estimates</p>
+            </div>
+            <div className="w-px h-10 bg-white/20 hidden md:block"></div>
+            <div className="text-center">
+              <p className="text-2xl md:text-3xl font-bold text-white">100%</p>
+              <p className="text-xs uppercase tracking-wider" style={{ color: colors.gray400 }}>Satisfaction</p>
+            </div>
           </div>
         </div>
       </div>
